@@ -1,7 +1,7 @@
-name = "lunar-distance"
+name = "but-how-far-is-the-moon-tho"
 type = "javascript"
 
-account_id = ""
+account_id = "ff404933c2aa00ddef4fe1e588481df5"
 workers_dev = true
 route = ""
 zone_id = ""
