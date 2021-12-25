@@ -47,9 +47,6 @@ async function handleRequest({ cf }) {
     <div>[*] - Caveats</div>
     <ol>
       <li>
-        Average lunar distance from earth of 384,472,282 meters used, rather than exact current.
-      </li>
-      <li>
         Using <a href="https://in-the-sky.org/ephemeris.php?ird=1&irs=1&ima=1&iob=1&objtype=1&objpl=Moon&objtxt=Mars&tz=0&startday=24&startmonth=12&startyear=2021&interval=1&rows=25" _target="blank">static ephemeris</a> for lunar coordinates, so it will be off by some degrees. How many degrees depends on time of day, as the ephemeris gives RAsc and Decl per day.
       </li>
     </ol>
@@ -92,7 +89,7 @@ function main(visitorPos) {
     },
     visitorPos,
   );
-  return surfaceDistance + AVG_LUNAR_ALTITUDE_FROM_EARTH;
+  return surfaceDistance + AUtoKM(parseFloat(ephemera.distanceInAu)) * 1000;
 }
 
 function distanceFromVisitorToObserverZenith(obsZenithPos, visitorPos) {
@@ -108,6 +105,10 @@ function distanceFromVisitorToObserverZenith(obsZenithPos, visitorPos) {
         Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.cos(longDelta),
     ) * earthRadius;
   return d;
+}
+
+function AUtoKM(dist) {
+  return dist * 149597870.691;
 }
 
 function dmsToDecimal(pos) {
@@ -130,45 +131,6 @@ function decimalToDMS(value) {
 }
 
 const dateIndexedEphemeris = {
-  "2021-12-22": {
-    year: "2021",
-    month: "12",
-    day: "22",
-    raHour: "08",
-    raMin: "16",
-    raSec: "08",
-    declDeg: "+24",
-    declMin: "22",
-    declSec: "35",
-    mag: "-12.5",
-    constellation: "Cancer",
-  },
-  "2021-12-23": {
-    year: "2021",
-    month: "12",
-    day: "23",
-    raHour: "09",
-    raMin: "07",
-    raSec: "40",
-    declDeg: "+21",
-    declMin: "40",
-    declSec: "15",
-    mag: "-12.5",
-    constellation: "Cancer",
-  },
-  "2021-12-24": {
-    year: "2021",
-    month: "12",
-    day: "24",
-    raHour: "09",
-    raMin: "57",
-    raSec: "38",
-    declDeg: "+17",
-    declMin: "57",
-    declSec: "29",
-    mag: "-12.4",
-    constellation: "Leo",
-  },
   "2021-12-25": {
     year: "2021",
     month: "12",
@@ -180,6 +142,7 @@ const dateIndexedEphemeris = {
     declMin: "24",
     declSec: "01",
     mag: "-12.3",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2021-12-26": {
@@ -193,6 +156,7 @@ const dateIndexedEphemeris = {
     declMin: "10",
     declSec: "25",
     mag: "-12.1",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2021-12-27": {
@@ -206,6 +170,7 @@ const dateIndexedEphemeris = {
     declMin: "27",
     declSec: "59",
     mag: "-12.0",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2021-12-28": {
@@ -219,6 +184,7 @@ const dateIndexedEphemeris = {
     declMin: "30",
     declSec: "36",
     mag: "-11.8",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2021-12-29": {
@@ -232,6 +198,7 @@ const dateIndexedEphemeris = {
     declMin: "30",
     declSec: "02",
     mag: "-11.5",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2021-12-30": {
@@ -245,6 +212,7 @@ const dateIndexedEphemeris = {
     declMin: "10",
     declSec: "40",
     mag: "-11.0",
+    distanceInAu: "0.0024",
     constellation: "Libra",
   },
   "2021-12-31": {
@@ -258,6 +226,7 @@ const dateIndexedEphemeris = {
     declMin: "07",
     declSec: "48",
     mag: "-10.4",
+    distanceInAu: "0.0024",
     constellation: "Libra",
   },
   "2022-01-01": {
@@ -271,6 +240,7 @@ const dateIndexedEphemeris = {
     declMin: "52",
     declSec: "56",
     mag: "-9.5",
+    distanceInAu: "0.0024",
     constellation: "Ophiuchus",
   },
   "2022-01-02": {
@@ -284,6 +254,7 @@ const dateIndexedEphemeris = {
     declMin: "59",
     declSec: "00",
     mag: "-7.8",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-01-03": {
@@ -297,6 +268,7 @@ const dateIndexedEphemeris = {
     declMin: "09",
     declSec: "10",
     mag: "-6.0",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-01-04": {
@@ -310,6 +282,7 @@ const dateIndexedEphemeris = {
     declMin: "24",
     declSec: "02",
     mag: "-8.8",
+    distanceInAu: "0.0024",
     constellation: "Capricornus",
   },
   "2022-01-05": {
@@ -323,6 +296,7 @@ const dateIndexedEphemeris = {
     declMin: "01",
     declSec: "10",
     mag: "-10.0",
+    distanceInAu: "0.0024",
     constellation: "Capricornus",
   },
   "2022-01-06": {
@@ -336,6 +310,7 @@ const dateIndexedEphemeris = {
     declMin: "27",
     declSec: "25",
     mag: "-10.7",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-01-07": {
@@ -349,6 +324,7 @@ const dateIndexedEphemeris = {
     declMin: "10",
     declSec: "08",
     mag: "-11.1",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-01-08": {
@@ -362,6 +338,7 @@ const dateIndexedEphemeris = {
     declMin: "32",
     declSec: "14",
     mag: "-11.5",
+    distanceInAu: "0.0026",
     constellation: "Aquarius",
   },
   "2022-01-09": {
@@ -375,6 +352,7 @@ const dateIndexedEphemeris = {
     declMin: "08",
     declSec: "46",
     mag: "-11.7",
+    distanceInAu: "0.0026",
     constellation: "Cetus",
   },
   "2022-01-10": {
@@ -388,6 +366,7 @@ const dateIndexedEphemeris = {
     declMin: "39",
     declSec: "47",
     mag: "-11.9",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-01-11": {
@@ -401,6 +380,7 @@ const dateIndexedEphemeris = {
     declMin: "50",
     declSec: "23",
     mag: "-12.1",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-01-12": {
@@ -414,6 +394,7 @@ const dateIndexedEphemeris = {
     declMin: "31",
     declSec: "22",
     mag: "-12.2",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-01-13": {
@@ -427,6 +408,7 @@ const dateIndexedEphemeris = {
     declMin: "33",
     declSec: "32",
     mag: "-12.3",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-01-14": {
@@ -440,6 +422,7 @@ const dateIndexedEphemeris = {
     declMin: "47",
     declSec: "19",
     mag: "-12.4",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-01-15": {
@@ -453,6 +436,7 @@ const dateIndexedEphemeris = {
     declMin: "03",
     declSec: "03",
     mag: "-12.5",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-01-16": {
@@ -466,6 +450,7 @@ const dateIndexedEphemeris = {
     declMin: "12",
     declSec: "04",
     mag: "-12.5",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-01-17": {
@@ -479,6 +464,7 @@ const dateIndexedEphemeris = {
     declMin: "08",
     declSec: "26",
     mag: "-12.6",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-01-18": {
@@ -492,6 +478,7 @@ const dateIndexedEphemeris = {
     declMin: "50",
     declSec: "26",
     mag: "-12.6",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-01-19": {
@@ -505,6 +492,7 @@ const dateIndexedEphemeris = {
     declMin: "21",
     declSec: "19",
     mag: "-12.6",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-01-20": {
@@ -518,6 +506,7 @@ const dateIndexedEphemeris = {
     declMin: "48",
     declSec: "33",
     mag: "-12.6",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-01-21": {
@@ -531,6 +520,7 @@ const dateIndexedEphemeris = {
     declMin: "22",
     declSec: "35",
     mag: "-12.5",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-01-22": {
@@ -544,6 +534,7 @@ const dateIndexedEphemeris = {
     declMin: "15",
     declSec: "20",
     mag: "-12.5",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-01-23": {
@@ -557,6 +548,7 @@ const dateIndexedEphemeris = {
     declMin: "39",
     declSec: "21",
     mag: "-12.4",
+    distanceInAu: "0.0026",
     constellation: "Virgo",
   },
   "2022-01-24": {
@@ -570,6 +562,7 @@ const dateIndexedEphemeris = {
     declMin: "12",
     declSec: "11",
     mag: "-12.3",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-01-25": {
@@ -583,6 +576,7 @@ const dateIndexedEphemeris = {
     declMin: "04",
     declSec: "59",
     mag: "-12.1",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-01-26": {
@@ -596,6 +590,7 @@ const dateIndexedEphemeris = {
     declMin: "42",
     declSec: "25",
     mag: "-11.9",
+    distanceInAu: "0.0025",
     constellation: "Libra",
   },
   "2022-01-27": {
@@ -609,6 +604,7 @@ const dateIndexedEphemeris = {
     declMin: "44",
     declSec: "31",
     mag: "-11.6",
+    distanceInAu: "0.0025",
     constellation: "Libra",
   },
   "2022-01-28": {
@@ -622,6 +618,7 @@ const dateIndexedEphemeris = {
     declMin: "47",
     declSec: "50",
     mag: "-11.2",
+    distanceInAu: "0.0024",
     constellation: "Ophiuchus",
   },
   "2022-01-29": {
@@ -635,6 +632,7 @@ const dateIndexedEphemeris = {
     declMin: "27",
     declSec: "34",
     mag: "-10.7",
+    distanceInAu: "0.0024",
     constellation: "Ophiuchus",
   },
   "2022-01-30": {
@@ -648,6 +646,7 @@ const dateIndexedEphemeris = {
     declMin: "23",
     declSec: "10",
     mag: "-10.0",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-01-31": {
@@ -661,6 +660,7 @@ const dateIndexedEphemeris = {
     declMin: "25",
     declSec: "39",
     mag: "-8.7",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-02-01": {
@@ -674,6 +674,7 @@ const dateIndexedEphemeris = {
     declMin: "41",
     declSec: "56",
     mag: "-6.3",
+    distanceInAu: "0.0024",
     constellation: "Capricornus",
   },
   "2022-02-02": {
@@ -687,6 +688,7 @@ const dateIndexedEphemeris = {
     declMin: "32",
     declSec: "26",
     mag: "-7.8",
+    distanceInAu: "0.0025",
     constellation: "Capricornus",
   },
   "2022-02-03": {
@@ -700,6 +702,7 @@ const dateIndexedEphemeris = {
     declMin: "23",
     declSec: "50",
     mag: "-9.4",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-02-04": {
@@ -713,6 +716,7 @@ const dateIndexedEphemeris = {
     declMin: "42",
     declSec: "19",
     mag: "-10.2",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-02-05": {
@@ -726,6 +730,7 @@ const dateIndexedEphemeris = {
     declMin: "49",
     declSec: "55",
     mag: "-10.8",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-02-06": {
@@ -739,6 +744,7 @@ const dateIndexedEphemeris = {
     declMin: "56",
     declSec: "16",
     mag: "-11.2",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-02-07": {
@@ -752,6 +758,7 @@ const dateIndexedEphemeris = {
     declMin: "23",
     declSec: "08",
     mag: "-11.5",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-02-08": {
@@ -765,6 +772,7 @@ const dateIndexedEphemeris = {
     declMin: "20",
     declSec: "07",
     mag: "-11.7",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-02-09": {
@@ -778,6 +786,7 @@ const dateIndexedEphemeris = {
     declMin: "37",
     declSec: "57",
     mag: "-11.9",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-02-10": {
@@ -791,6 +800,7 @@ const dateIndexedEphemeris = {
     declMin: "07",
     declSec: "44",
     mag: "-12.1",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-02-11": {
@@ -804,6 +814,7 @@ const dateIndexedEphemeris = {
     declMin: "40",
     declSec: "39",
     mag: "-12.2",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-02-12": {
@@ -817,6 +828,7 @@ const dateIndexedEphemeris = {
     declMin: "08",
     declSec: "29",
     mag: "-12.3",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-02-13": {
@@ -830,6 +842,7 @@ const dateIndexedEphemeris = {
     declMin: "24",
     declSec: "47",
     mag: "-12.4",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-02-14": {
@@ -843,6 +856,7 @@ const dateIndexedEphemeris = {
     declMin: "26",
     declSec: "23",
     mag: "-12.5",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-02-15": {
@@ -856,6 +870,7 @@ const dateIndexedEphemeris = {
     declMin: "14",
     declSec: "26",
     mag: "-12.6",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-02-16": {
@@ -869,6 +884,7 @@ const dateIndexedEphemeris = {
     declMin: "54",
     declSec: "34",
     mag: "-12.6",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-02-17": {
@@ -882,6 +898,7 @@ const dateIndexedEphemeris = {
     declMin: "36",
     declSec: "11",
     mag: "-12.6",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-02-18": {
@@ -895,6 +912,7 @@ const dateIndexedEphemeris = {
     declMin: "31",
     declSec: "19",
     mag: "-12.6",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-02-19": {
@@ -908,6 +926,7 @@ const dateIndexedEphemeris = {
     declMin: "53",
     declSec: "36",
     mag: "-12.6",
+    distanceInAu: "0.0026",
     constellation: "Virgo",
   },
   "2022-02-20": {
@@ -921,6 +940,7 @@ const dateIndexedEphemeris = {
     declMin: "02",
     declSec: "13",
     mag: "-12.6",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-02-21": {
@@ -934,6 +954,7 @@ const dateIndexedEphemeris = {
     declMin: "00",
     declSec: "23",
     mag: "-12.5",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-02-22": {
@@ -947,6 +968,7 @@ const dateIndexedEphemeris = {
     declMin: "43",
     declSec: "45",
     mag: "-12.4",
+    distanceInAu: "0.0025",
     constellation: "Libra",
   },
   "2022-02-23": {
@@ -960,6 +982,7 @@ const dateIndexedEphemeris = {
     declMin: "53",
     declSec: "16",
     mag: "-12.2",
+    distanceInAu: "0.0025",
     constellation: "Libra",
   },
   "2022-02-24": {
@@ -973,6 +996,7 @@ const dateIndexedEphemeris = {
     declMin: "08",
     declSec: "01",
     mag: "-12.0",
+    distanceInAu: "0.0025",
     constellation: "Scorpius",
   },
   "2022-02-25": {
@@ -986,6 +1010,7 @@ const dateIndexedEphemeris = {
     declMin: "06",
     declSec: "28",
     mag: "-11.7",
+    distanceInAu: "0.0025",
     constellation: "Ophiuchus",
   },
   "2022-02-26": {
@@ -999,6 +1024,7 @@ const dateIndexedEphemeris = {
     declMin: "29",
     declSec: "54",
     mag: "-11.4",
+    distanceInAu: "0.0025",
     constellation: "Sagittarius",
   },
   "2022-02-27": {
@@ -1012,6 +1038,7 @@ const dateIndexedEphemeris = {
     declMin: "07",
     declSec: "32",
     mag: "-10.9",
+    distanceInAu: "0.0025",
     constellation: "Sagittarius",
   },
   "2022-02-28": {
@@ -1025,6 +1052,7 @@ const dateIndexedEphemeris = {
     declMin: "00",
     declSec: "41",
     mag: "-10.2",
+    distanceInAu: "0.0025",
     constellation: "Capricornus",
   },
   "2022-03-01": {
@@ -1038,6 +1066,7 @@ const dateIndexedEphemeris = {
     declMin: "22",
     declSec: "50",
     mag: "-9.3",
+    distanceInAu: "0.0025",
     constellation: "Capricornus",
   },
   "2022-03-02": {
@@ -1051,6 +1080,7 @@ const dateIndexedEphemeris = {
     declMin: "35",
     declSec: "32",
     mag: "-7.6",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-03-03": {
@@ -1064,6 +1094,7 @@ const dateIndexedEphemeris = {
     declMin: "03",
     declSec: "02",
     mag: "-6.3",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-03-04": {
@@ -1077,6 +1108,7 @@ const dateIndexedEphemeris = {
     declMin: "08",
     declSec: "18",
     mag: "-8.5",
+    distanceInAu: "0.0025",
     constellation: "Pisces",
   },
   "2022-03-05": {
@@ -1090,6 +1122,7 @@ const dateIndexedEphemeris = {
     declMin: "48",
     declSec: "55",
     mag: "-9.6",
+    distanceInAu: "0.0026",
     constellation: "Cetus",
   },
   "2022-03-06": {
@@ -1103,6 +1136,7 @@ const dateIndexedEphemeris = {
     declMin: "32",
     declSec: "26",
     mag: "-10.3",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-03-07": {
@@ -1116,6 +1150,7 @@ const dateIndexedEphemeris = {
     declMin: "49",
     declSec: "02",
     mag: "-10.8",
+    distanceInAu: "0.0026",
     constellation: "Aries",
   },
   "2022-03-08": {
@@ -1129,6 +1164,7 @@ const dateIndexedEphemeris = {
     declMin: "27",
     declSec: "36",
     mag: "-11.2",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-03-09": {
@@ -1142,6 +1178,7 @@ const dateIndexedEphemeris = {
     declMin: "18",
     declSec: "24",
     mag: "-11.5",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-03-10": {
@@ -1155,6 +1192,7 @@ const dateIndexedEphemeris = {
     declMin: "12",
     declSec: "36",
     mag: "-11.7",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-03-11": {
@@ -1168,6 +1206,7 @@ const dateIndexedEphemeris = {
     declMin: "02",
     declSec: "22",
     mag: "-11.9",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-03-12": {
@@ -1181,6 +1220,7 @@ const dateIndexedEphemeris = {
     declMin: "41",
     declSec: "33",
     mag: "-12.1",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-03-13": {
@@ -1194,6 +1234,7 @@ const dateIndexedEphemeris = {
     declMin: "06",
     declSec: "37",
     mag: "-12.2",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-03-14": {
@@ -1207,6 +1248,7 @@ const dateIndexedEphemeris = {
     declMin: "17",
     declSec: "31",
     mag: "-12.4",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-03-15": {
@@ -1220,6 +1262,7 @@ const dateIndexedEphemeris = {
     declMin: "18",
     declSec: "00",
     mag: "-12.5",
+    distanceInAu: "0.0026",
     constellation: "Cancer",
   },
   "2022-03-16": {
@@ -1233,6 +1276,7 @@ const dateIndexedEphemeris = {
     declMin: "15",
     declSec: "21",
     mag: "-12.6",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-03-17": {
@@ -1246,6 +1290,7 @@ const dateIndexedEphemeris = {
     declMin: "19",
     declSec: "44",
     mag: "-12.6",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-03-18": {
@@ -1259,6 +1304,7 @@ const dateIndexedEphemeris = {
     declMin: "43",
     declSec: "49",
     mag: "-12.7",
+    distanceInAu: "0.0026",
     constellation: "Virgo",
   },
   "2022-03-19": {
@@ -1272,6 +1318,7 @@ const dateIndexedEphemeris = {
     declMin: "42",
     declSec: "23",
     mag: "-12.7",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-03-20": {
@@ -1285,6 +1332,7 @@ const dateIndexedEphemeris = {
     declMin: "27",
     declSec: "38",
     mag: "-12.7",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-03-21": {
@@ -1298,6 +1346,7 @@ const dateIndexedEphemeris = {
     declMin: "27",
     declSec: "15",
     mag: "-12.6",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-03-22": {
@@ -1311,6 +1360,7 @@ const dateIndexedEphemeris = {
     declMin: "55",
     declSec: "27",
     mag: "-12.5",
+    distanceInAu: "0.0025",
     constellation: "Libra",
   },
   "2022-03-23": {
@@ -1324,6 +1374,7 @@ const dateIndexedEphemeris = {
     declMin: "29",
     declSec: "55",
     mag: "-12.4",
+    distanceInAu: "0.0025",
     constellation: "Scorpius",
   },
   "2022-03-24": {
@@ -1337,6 +1388,7 @@ const dateIndexedEphemeris = {
     declMin: "48",
     declSec: "51",
     mag: "-12.3",
+    distanceInAu: "0.0025",
     constellation: "Ophiuchus",
   },
   "2022-03-25": {
@@ -1350,6 +1402,7 @@ const dateIndexedEphemeris = {
     declMin: "34",
     declSec: "10",
     mag: "-12.0",
+    distanceInAu: "0.0025",
     constellation: "Sagittarius",
   },
   "2022-03-26": {
@@ -1363,6 +1416,7 @@ const dateIndexedEphemeris = {
     declMin: "35",
     declSec: "46",
     mag: "-11.8",
+    distanceInAu: "0.0025",
     constellation: "Sagittarius",
   },
   "2022-03-27": {
@@ -1376,6 +1430,7 @@ const dateIndexedEphemeris = {
     declMin: "54",
     declSec: "39",
     mag: "-11.4",
+    distanceInAu: "0.0025",
     constellation: "Capricornus",
   },
   "2022-03-28": {
@@ -1389,6 +1444,7 @@ const dateIndexedEphemeris = {
     declMin: "42",
     declSec: "22",
     mag: "-11.0",
+    distanceInAu: "0.0025",
     constellation: "Capricornus",
   },
   "2022-03-29": {
@@ -1402,6 +1458,7 @@ const dateIndexedEphemeris = {
     declMin: "17",
     declSec: "36",
     mag: "-10.4",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-03-30": {
@@ -1415,6 +1472,7 @@ const dateIndexedEphemeris = {
     declMin: "01",
     declSec: "45",
     mag: "-9.7",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-03-31": {
@@ -1428,6 +1486,7 @@ const dateIndexedEphemeris = {
     declMin: "15",
     declSec: "44",
     mag: "-8.4",
+    distanceInAu: "0.0026",
     constellation: "Aquarius",
   },
   "2022-04-01": {
@@ -1441,6 +1500,7 @@ const dateIndexedEphemeris = {
     declMin: "18",
     declSec: "39",
     mag: "-5.8",
+    distanceInAu: "0.0026",
     constellation: "Cetus",
   },
   "2022-04-02": {
@@ -1454,6 +1514,7 @@ const dateIndexedEphemeris = {
     declMin: "32",
     declSec: "41",
     mag: "-7.2",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-04-03": {
@@ -1467,6 +1528,7 @@ const dateIndexedEphemeris = {
     declMin: "03",
     declSec: "37",
     mag: "-8.9",
+    distanceInAu: "0.0026",
     constellation: "Aries",
   },
   "2022-04-04": {
@@ -1480,6 +1542,7 @@ const dateIndexedEphemeris = {
     declMin: "01",
     declSec: "10",
     mag: "-9.8",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-04-05": {
@@ -1493,6 +1556,7 @@ const dateIndexedEphemeris = {
     declMin: "13",
     declSec: "48",
     mag: "-10.4",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-04-06": {
@@ -1506,6 +1570,7 @@ const dateIndexedEphemeris = {
     declMin: "31",
     declSec: "20",
     mag: "-10.9",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-04-07": {
@@ -1519,6 +1584,7 @@ const dateIndexedEphemeris = {
     declMin: "45",
     declSec: "11",
     mag: "-11.2",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-04-08": {
@@ -1532,6 +1598,7 @@ const dateIndexedEphemeris = {
     declMin: "48",
     declSec: "56",
     mag: "-11.5",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-04-09": {
@@ -1545,6 +1612,7 @@ const dateIndexedEphemeris = {
     declMin: "39",
     declSec: "00",
     mag: "-11.7",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-04-10": {
@@ -1558,6 +1626,7 @@ const dateIndexedEphemeris = {
     declMin: "15",
     declSec: "13",
     mag: "-11.9",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-04-11": {
@@ -1571,6 +1640,7 @@ const dateIndexedEphemeris = {
     declMin: "40",
     declSec: "39",
     mag: "-12.1",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-04-12": {
@@ -1584,6 +1654,7 @@ const dateIndexedEphemeris = {
     declMin: "01",
     declSec: "16",
     mag: "-12.3",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-04-13": {
@@ -1597,6 +1668,7 @@ const dateIndexedEphemeris = {
     declMin: "25",
     declSec: "18",
     mag: "-12.4",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-04-14": {
@@ -1610,6 +1682,7 @@ const dateIndexedEphemeris = {
     declMin: "02",
     declSec: "59",
     mag: "-12.5",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-04-15": {
@@ -1623,6 +1696,7 @@ const dateIndexedEphemeris = {
     declMin: "06",
     declSec: "49",
     mag: "-12.6",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-04-16": {
@@ -1636,6 +1710,7 @@ const dateIndexedEphemeris = {
     declMin: "07",
     declSec: "55",
     mag: "-12.7",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-04-17": {
@@ -1649,6 +1724,7 @@ const dateIndexedEphemeris = {
     declMin: "22",
     declSec: "33",
     mag: "-12.7",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-04-18": {
@@ -1662,6 +1738,7 @@ const dateIndexedEphemeris = {
     declMin: "14",
     declSec: "42",
     mag: "-12.7",
+    distanceInAu: "0.0025",
     constellation: "Libra",
   },
   "2022-04-19": {
@@ -1675,6 +1752,7 @@ const dateIndexedEphemeris = {
     declMin: "19",
     declSec: "10",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Libra",
   },
   "2022-04-20": {
@@ -1688,6 +1766,7 @@ const dateIndexedEphemeris = {
     declMin: "10",
     declSec: "11",
     mag: "-12.6",
+    distanceInAu: "0.0024",
     constellation: "Ophiuchus",
   },
   "2022-04-21": {
@@ -1701,6 +1780,7 @@ const dateIndexedEphemeris = {
     declMin: "25",
     declSec: "55",
     mag: "-12.5",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-04-22": {
@@ -1714,6 +1794,7 @@ const dateIndexedEphemeris = {
     declMin: "53",
     declSec: "53",
     mag: "-12.3",
+    distanceInAu: "0.0025",
     constellation: "Sagittarius",
   },
   "2022-04-23": {
@@ -1727,6 +1808,7 @@ const dateIndexedEphemeris = {
     declMin: "34",
     declSec: "34",
     mag: "-12.1",
+    distanceInAu: "0.0025",
     constellation: "Sagittarius",
   },
   "2022-04-24": {
@@ -1740,6 +1822,7 @@ const dateIndexedEphemeris = {
     declMin: "40",
     declSec: "30",
     mag: "-11.8",
+    distanceInAu: "0.0025",
     constellation: "Capricornus",
   },
   "2022-04-25": {
@@ -1753,6 +1836,7 @@ const dateIndexedEphemeris = {
     declMin: "31",
     declSec: "25",
     mag: "-11.5",
+    distanceInAu: "0.0025",
     constellation: "Capricornus",
   },
   "2022-04-26": {
@@ -1766,6 +1850,7 @@ const dateIndexedEphemeris = {
     declMin: "28",
     declSec: "58",
     mag: "-11.1",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-04-27": {
@@ -1779,6 +1864,7 @@ const dateIndexedEphemeris = {
     declMin: "53",
     declSec: "26",
     mag: "-10.6",
+    distanceInAu: "0.0026",
     constellation: "Aquarius",
   },
   "2022-04-28": {
@@ -1792,6 +1878,7 @@ const dateIndexedEphemeris = {
     declMin: "02",
     declSec: "41",
     mag: "-9.9",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-04-29": {
@@ -1805,6 +1892,7 @@ const dateIndexedEphemeris = {
     declMin: "47",
     declSec: "41",
     mag: "-9.0",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-04-30": {
@@ -1818,6 +1906,7 @@ const dateIndexedEphemeris = {
     declMin: "23",
     declSec: "37",
     mag: "-7.3",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-05-01": {
@@ -1831,6 +1920,7 @@ const dateIndexedEphemeris = {
     declMin: "32",
     declSec: "04",
     mag: "-3.7",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-05-02": {
@@ -1844,6 +1934,7 @@ const dateIndexedEphemeris = {
     declMin: "00",
     declSec: "45",
     mag: "-7.8",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-05-03": {
@@ -1857,6 +1948,7 @@ const dateIndexedEphemeris = {
     declMin: "38",
     declSec: "12",
     mag: "-9.1",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-05-04": {
@@ -1870,6 +1962,7 @@ const dateIndexedEphemeris = {
     declMin: "14",
     declSec: "22",
     mag: "-9.9",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-05-05": {
@@ -1883,6 +1976,7 @@ const dateIndexedEphemeris = {
     declMin: "41",
     declSec: "34",
     mag: "-10.5",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-05-06": {
@@ -1896,6 +1990,7 @@ const dateIndexedEphemeris = {
     declMin: "55",
     declSec: "24",
     mag: "-10.9",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-05-07": {
@@ -1909,6 +2004,7 @@ const dateIndexedEphemeris = {
     declMin: "55",
     declSec: "21",
     mag: "-11.3",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-05-08": {
@@ -1922,6 +2018,7 @@ const dateIndexedEphemeris = {
     declMin: "44",
     declSec: "33",
     mag: "-11.5",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-05-09": {
@@ -1935,6 +2032,7 @@ const dateIndexedEphemeris = {
     declMin: "29",
     declSec: "00",
     mag: "-11.8",
+    distanceInAu: "0.0027",
     constellation: "Leo",
   },
   "2022-05-10": {
@@ -1948,6 +2046,7 @@ const dateIndexedEphemeris = {
     declMin: "16",
     declSec: "24",
     mag: "-12.0",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-05-11": {
@@ -1961,6 +2060,7 @@ const dateIndexedEphemeris = {
     declMin: "15",
     declSec: "38",
     mag: "-12.2",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-05-12": {
@@ -1974,6 +2074,7 @@ const dateIndexedEphemeris = {
     declMin: "36",
     declSec: "46",
     mag: "-12.4",
+    distanceInAu: "0.0026",
     constellation: "Virgo",
   },
   "2022-05-13": {
@@ -1987,6 +2088,7 @@ const dateIndexedEphemeris = {
     declMin: "28",
     declSec: "05",
     mag: "-12.5",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-05-14": {
@@ -2000,6 +2102,7 @@ const dateIndexedEphemeris = {
     declMin: "43",
     declSec: "39",
     mag: "-12.6",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-05-15": {
@@ -2013,6 +2116,7 @@ const dateIndexedEphemeris = {
     declMin: "50",
     declSec: "06",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Libra",
   },
   "2022-05-16": {
@@ -2026,6 +2130,7 @@ const dateIndexedEphemeris = {
     declMin: "22",
     declSec: "31",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Libra",
   },
   "2022-05-17": {
@@ -2039,6 +2144,7 @@ const dateIndexedEphemeris = {
     declMin: "52",
     declSec: "10",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Scorpius",
   },
   "2022-05-18": {
@@ -2052,6 +2158,7 @@ const dateIndexedEphemeris = {
     declMin: "50",
     declSec: "54",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Ophiuchus",
   },
   "2022-05-19": {
@@ -2065,6 +2172,7 @@ const dateIndexedEphemeris = {
     declMin: "58",
     declSec: "33",
     mag: "-12.6",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-05-20": {
@@ -2078,6 +2186,7 @@ const dateIndexedEphemeris = {
     declMin: "09",
     declSec: "54",
     mag: "-12.5",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-05-21": {
@@ -2091,6 +2200,7 @@ const dateIndexedEphemeris = {
     declMin: "35",
     declSec: "59",
     mag: "-12.3",
+    distanceInAu: "0.0025",
     constellation: "Capricornus",
   },
   "2022-05-22": {
@@ -2104,6 +2214,7 @@ const dateIndexedEphemeris = {
     declMin: "38",
     declSec: "45",
     mag: "-12.1",
+    distanceInAu: "0.0025",
     constellation: "Capricornus",
   },
   "2022-05-23": {
@@ -2117,6 +2228,7 @@ const dateIndexedEphemeris = {
     declMin: "43",
     declSec: "10",
     mag: "-11.9",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-05-24": {
@@ -2130,6 +2242,7 @@ const dateIndexedEphemeris = {
     declMin: "12",
     declSec: "05",
     mag: "-11.6",
+    distanceInAu: "0.0026",
     constellation: "Aquarius",
   },
   "2022-05-25": {
@@ -2143,6 +2256,7 @@ const dateIndexedEphemeris = {
     declMin: "24",
     declSec: "24",
     mag: "-11.2",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-05-26": {
@@ -2156,6 +2270,7 @@ const dateIndexedEphemeris = {
     declMin: "24",
     declSec: "28",
     mag: "-10.8",
+    distanceInAu: "0.0026",
     constellation: "Cetus",
   },
   "2022-05-27": {
@@ -2169,6 +2284,7 @@ const dateIndexedEphemeris = {
     declMin: "01",
     declSec: "28",
     mag: "-10.2",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-05-28": {
@@ -2182,6 +2298,7 @@ const dateIndexedEphemeris = {
     declMin: "14",
     declSec: "37",
     mag: "-9.4",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-05-29": {
@@ -2195,6 +2312,7 @@ const dateIndexedEphemeris = {
     declMin: "52",
     declSec: "19",
     mag: "-8.3",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-05-30": {
@@ -2208,6 +2326,7 @@ const dateIndexedEphemeris = {
     declMin: "43",
     declSec: "12",
     mag: "-5.9",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-05-31": {
@@ -2221,6 +2340,7 @@ const dateIndexedEphemeris = {
     declMin: "36",
     declSec: "30",
     mag: "-6.1",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-06-01": {
@@ -2234,6 +2354,7 @@ const dateIndexedEphemeris = {
     declMin: "23",
     declSec: "14",
     mag: "-8.3",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-06-02": {
@@ -2247,6 +2368,7 @@ const dateIndexedEphemeris = {
     declMin: "57",
     declSec: "31",
     mag: "-9.4",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-06-03": {
@@ -2260,6 +2382,7 @@ const dateIndexedEphemeris = {
     declMin: "17",
     declSec: "42",
     mag: "-10.1",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-06-04": {
@@ -2273,6 +2396,7 @@ const dateIndexedEphemeris = {
     declMin: "26",
     declSec: "29",
     mag: "-10.6",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-06-05": {
@@ -2286,6 +2410,7 @@ const dateIndexedEphemeris = {
     declMin: "30",
     declSec: "04",
     mag: "-11.0",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-06-06": {
@@ -2299,6 +2424,7 @@ const dateIndexedEphemeris = {
     declMin: "36",
     declSec: "44",
     mag: "-11.4",
+    distanceInAu: "0.0027",
     constellation: "Leo",
   },
   "2022-06-07": {
@@ -2312,6 +2438,7 @@ const dateIndexedEphemeris = {
     declMin: "55",
     declSec: "35",
     mag: "-11.7",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-06-08": {
@@ -2325,6 +2452,7 @@ const dateIndexedEphemeris = {
     declMin: "36",
     declSec: "08",
     mag: "-11.9",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-06-09": {
@@ -2338,6 +2466,7 @@ const dateIndexedEphemeris = {
     declMin: "48",
     declSec: "35",
     mag: "-12.1",
+    distanceInAu: "0.0026",
     constellation: "Virgo",
   },
   "2022-06-10": {
@@ -2351,6 +2480,7 @@ const dateIndexedEphemeris = {
     declMin: "15",
     declSec: "01",
     mag: "-12.3",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-06-11": {
@@ -2364,6 +2494,7 @@ const dateIndexedEphemeris = {
     declMin: "19",
     declSec: "19",
     mag: "-12.5",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-06-12": {
@@ -2377,6 +2508,7 @@ const dateIndexedEphemeris = {
     declMin: "03",
     declSec: "49",
     mag: "-12.6",
+    distanceInAu: "0.0024",
     constellation: "Libra",
   },
   "2022-06-13": {
@@ -2390,6 +2522,7 @@ const dateIndexedEphemeris = {
     declMin: "02",
     declSec: "16",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Scorpius",
   },
   "2022-06-14": {
@@ -2403,6 +2536,7 @@ const dateIndexedEphemeris = {
     declMin: "44",
     declSec: "26",
     mag: "-12.8",
+    distanceInAu: "0.0024",
     constellation: "Ophiuchus",
   },
   "2022-06-15": {
@@ -2416,6 +2550,7 @@ const dateIndexedEphemeris = {
     declMin: "42",
     declSec: "20",
     mag: "-12.8",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-06-16": {
@@ -2429,6 +2564,7 @@ const dateIndexedEphemeris = {
     declMin: "39",
     declSec: "45",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-06-17": {
@@ -2442,6 +2578,7 @@ const dateIndexedEphemeris = {
     declMin: "39",
     declSec: "09",
     mag: "-12.6",
+    distanceInAu: "0.0024",
     constellation: "Capricornus",
   },
   "2022-06-18": {
@@ -2455,6 +2592,7 @@ const dateIndexedEphemeris = {
     declMin: "00",
     declSec: "10",
     mag: "-12.5",
+    distanceInAu: "0.0024",
     constellation: "Capricornus",
   },
   "2022-06-19": {
@@ -2468,6 +2606,7 @@ const dateIndexedEphemeris = {
     declMin: "10",
     declSec: "45",
     mag: "-12.3",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-06-20": {
@@ -2481,6 +2620,7 @@ const dateIndexedEphemeris = {
     declMin: "38",
     declSec: "33",
     mag: "-12.1",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-06-21": {
@@ -2494,6 +2634,7 @@ const dateIndexedEphemeris = {
     declMin: "46",
     declSec: "34",
     mag: "-11.9",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-06-22": {
@@ -2507,6 +2648,7 @@ const dateIndexedEphemeris = {
     declMin: "07",
     declSec: "25",
     mag: "-11.6",
+    distanceInAu: "0.0026",
     constellation: "Cetus",
   },
   "2022-06-23": {
@@ -2520,6 +2662,7 @@ const dateIndexedEphemeris = {
     declMin: "49",
     declSec: "37",
     mag: "-11.3",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-06-24": {
@@ -2533,6 +2676,7 @@ const dateIndexedEphemeris = {
     declMin: "08",
     declSec: "29",
     mag: "-10.9",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-06-25": {
@@ -2546,6 +2690,7 @@ const dateIndexedEphemeris = {
     declMin: "53",
     declSec: "27",
     mag: "-10.5",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-06-26": {
@@ -2559,6 +2704,7 @@ const dateIndexedEphemeris = {
     declMin: "54",
     declSec: "07",
     mag: "-9.9",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-06-27": {
@@ -2572,6 +2718,7 @@ const dateIndexedEphemeris = {
     declMin: "00",
     declSec: "12",
     mag: "-9.0",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-06-28": {
@@ -2585,6 +2732,7 @@ const dateIndexedEphemeris = {
     declMin: "02",
     declSec: "23",
     mag: "-7.7",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-06-29": {
@@ -2598,6 +2746,7 @@ const dateIndexedEphemeris = {
     declMin: "53",
     declSec: "41",
     mag: "-5.1",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-06-30": {
@@ -2611,6 +2760,7 @@ const dateIndexedEphemeris = {
     declMin: "30",
     declSec: "57",
     mag: "-7.3",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-07-01": {
@@ -2624,6 +2774,7 @@ const dateIndexedEphemeris = {
     declMin: "55",
     declSec: "40",
     mag: "-8.8",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-07-02": {
@@ -2637,6 +2788,7 @@ const dateIndexedEphemeris = {
     declMin: "13",
     declSec: "34",
     mag: "-9.7",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-07-03": {
@@ -2650,6 +2802,7 @@ const dateIndexedEphemeris = {
     declMin: "33",
     declSec: "15",
     mag: "-10.3",
+    distanceInAu: "0.0027",
     constellation: "Leo",
   },
   "2022-07-04": {
@@ -2663,6 +2816,7 @@ const dateIndexedEphemeris = {
     declMin: "04",
     declSec: "41",
     mag: "-10.8",
+    distanceInAu: "0.0027",
     constellation: "Leo",
   },
   "2022-07-05": {
@@ -2676,6 +2830,7 @@ const dateIndexedEphemeris = {
     declMin: "58",
     declSec: "08",
     mag: "-11.2",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-07-06": {
@@ -2689,6 +2844,7 @@ const dateIndexedEphemeris = {
     declMin: "23",
     declSec: "58",
     mag: "-11.6",
+    distanceInAu: "0.0026",
     constellation: "Virgo",
   },
   "2022-07-07": {
@@ -2702,6 +2858,7 @@ const dateIndexedEphemeris = {
     declMin: "26",
     declSec: "53",
     mag: "-11.8",
+    distanceInAu: "0.0026",
     constellation: "Virgo",
   },
   "2022-07-08": {
@@ -2715,6 +2872,7 @@ const dateIndexedEphemeris = {
     declMin: "21",
     declSec: "45",
     mag: "-12.1",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-07-09": {
@@ -2728,6 +2886,7 @@ const dateIndexedEphemeris = {
     declMin: "04",
     declSec: "31",
     mag: "-12.3",
+    distanceInAu: "0.0025",
     constellation: "Libra",
   },
   "2022-07-10": {
@@ -2741,6 +2900,7 @@ const dateIndexedEphemeris = {
     declMin: "14",
     declSec: "11",
     mag: "-12.5",
+    distanceInAu: "0.0025",
     constellation: "Libra",
   },
   "2022-07-11": {
@@ -2754,6 +2914,7 @@ const dateIndexedEphemeris = {
     declMin: "24",
     declSec: "23",
     mag: "-12.6",
+    distanceInAu: "0.0024",
     constellation: "Ophiuchus",
   },
   "2022-07-12": {
@@ -2767,6 +2928,7 @@ const dateIndexedEphemeris = {
     declMin: "06",
     declSec: "15",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Ophiuchus",
   },
   "2022-07-13": {
@@ -2780,6 +2942,7 @@ const dateIndexedEphemeris = {
     declMin: "55",
     declSec: "38",
     mag: "-12.8",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-07-14": {
@@ -2793,6 +2956,7 @@ const dateIndexedEphemeris = {
     declMin: "42",
     declSec: "48",
     mag: "-12.8",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-07-15": {
@@ -2806,6 +2970,7 @@ const dateIndexedEphemeris = {
     declMin: "37",
     declSec: "27",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Capricornus",
   },
   "2022-07-16": {
@@ -2819,6 +2984,7 @@ const dateIndexedEphemeris = {
     declMin: "04",
     declSec: "23",
     mag: "-12.6",
+    distanceInAu: "0.0024",
     constellation: "Capricornus",
   },
   "2022-07-17": {
@@ -2832,6 +2998,7 @@ const dateIndexedEphemeris = {
     declMin: "34",
     declSec: "02",
     mag: "-12.5",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-07-18": {
@@ -2845,6 +3012,7 @@ const dateIndexedEphemeris = {
     declMin: "34",
     declSec: "34",
     mag: "-12.4",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-07-19": {
@@ -2858,6 +3026,7 @@ const dateIndexedEphemeris = {
     declMin: "28",
     declSec: "35",
     mag: "-12.2",
+    distanceInAu: "0.0025",
     constellation: "Cetus",
   },
   "2022-07-20": {
@@ -2871,6 +3040,7 @@ const dateIndexedEphemeris = {
     declMin: "26",
     declSec: "45",
     mag: "-12.0",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-07-21": {
@@ -2884,6 +3054,7 @@ const dateIndexedEphemeris = {
     declMin: "58",
     declSec: "23",
     mag: "-11.7",
+    distanceInAu: "0.0026",
     constellation: "Aries",
   },
   "2022-07-22": {
@@ -2897,6 +3068,7 @@ const dateIndexedEphemeris = {
     declMin: "55",
     declSec: "30",
     mag: "-11.4",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-07-23": {
@@ -2910,6 +3082,7 @@ const dateIndexedEphemeris = {
     declMin: "08",
     declSec: "20",
     mag: "-11.1",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-07-24": {
@@ -2923,6 +3096,7 @@ const dateIndexedEphemeris = {
     declMin: "27",
     declSec: "29",
     mag: "-10.7",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-07-25": {
@@ -2936,6 +3110,7 @@ const dateIndexedEphemeris = {
     declMin: "44",
     declSec: "12",
     mag: "-10.2",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-07-26": {
@@ -2949,6 +3124,7 @@ const dateIndexedEphemeris = {
     declMin: "51",
     declSec: "19",
     mag: "-9.6",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-07-27": {
@@ -2962,6 +3138,7 @@ const dateIndexedEphemeris = {
     declMin: "44",
     declSec: "43",
     mag: "-8.7",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-07-28": {
@@ -2975,6 +3152,7 @@ const dateIndexedEphemeris = {
     declMin: "24",
     declSec: "29",
     mag: "-7.1",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-07-29": {
@@ -2988,6 +3166,7 @@ const dateIndexedEphemeris = {
     declMin: "55",
     declSec: "06",
     mag: "-6.0",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-07-30": {
@@ -3001,6 +3180,7 @@ const dateIndexedEphemeris = {
     declMin: "24",
     declSec: "39",
     mag: "-8.1",
+    distanceInAu: "0.0027",
     constellation: "Leo",
   },
   "2022-07-31": {
@@ -3014,6 +3194,7 @@ const dateIndexedEphemeris = {
     declMin: "03",
     declSec: "22",
     mag: "-9.3",
+    distanceInAu: "0.0027",
     constellation: "Leo",
   },
   "2022-08-01": {
@@ -3027,6 +3208,7 @@ const dateIndexedEphemeris = {
     declMin: "02",
     declSec: "26",
     mag: "-10.1",
+    distanceInAu: "0.0026",
     constellation: "Leo",
   },
   "2022-08-02": {
@@ -3040,6 +3222,7 @@ const dateIndexedEphemeris = {
     declMin: "33",
     declSec: "13",
     mag: "-10.6",
+    distanceInAu: "0.0026",
     constellation: "Virgo",
   },
   "2022-08-03": {
@@ -3053,6 +3236,7 @@ const dateIndexedEphemeris = {
     declMin: "12",
     declSec: "38",
     mag: "-11.1",
+    distanceInAu: "0.0026",
     constellation: "Virgo",
   },
   "2022-08-04": {
@@ -3066,6 +3250,7 @@ const dateIndexedEphemeris = {
     declMin: "02",
     declSec: "44",
     mag: "-11.5",
+    distanceInAu: "0.0026",
     constellation: "Virgo",
   },
   "2022-08-05": {
@@ -3079,6 +3264,7 @@ const dateIndexedEphemeris = {
     declMin: "42",
     declSec: "45",
     mag: "-11.8",
+    distanceInAu: "0.0025",
     constellation: "Virgo",
   },
   "2022-08-06": {
@@ -3092,6 +3278,7 @@ const dateIndexedEphemeris = {
     declMin: "55",
     declSec: "09",
     mag: "-12.0",
+    distanceInAu: "0.0025",
     constellation: "Libra",
   },
   "2022-08-07": {
@@ -3105,6 +3292,7 @@ const dateIndexedEphemeris = {
     declMin: "18",
     declSec: "18",
     mag: "-12.3",
+    distanceInAu: "0.0025",
     constellation: "Scorpius",
   },
   "2022-08-08": {
@@ -3118,6 +3306,7 @@ const dateIndexedEphemeris = {
     declMin: "27",
     declSec: "11",
     mag: "-12.4",
+    distanceInAu: "0.0024",
     constellation: "Ophiuchus",
   },
   "2022-08-09": {
@@ -3131,6 +3320,7 @@ const dateIndexedEphemeris = {
     declMin: "57",
     declSec: "26",
     mag: "-12.6",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-08-10": {
@@ -3144,6 +3334,7 @@ const dateIndexedEphemeris = {
     declMin: "32",
     declSec: "41",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Sagittarius",
   },
   "2022-08-11": {
@@ -3157,6 +3348,7 @@ const dateIndexedEphemeris = {
     declMin: "11",
     declSec: "53",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Capricornus",
   },
   "2022-08-12": {
@@ -3170,6 +3362,7 @@ const dateIndexedEphemeris = {
     declMin: "10",
     declSec: "37",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Capricornus",
   },
   "2022-08-13": {
@@ -3183,6 +3376,7 @@ const dateIndexedEphemeris = {
     declMin: "55",
     declSec: "29",
     mag: "-12.7",
+    distanceInAu: "0.0024",
     constellation: "Aquarius",
   },
   "2022-08-14": {
@@ -3196,6 +3390,7 @@ const dateIndexedEphemeris = {
     declMin: "56",
     declSec: "05",
     mag: "-12.6",
+    distanceInAu: "0.0025",
     constellation: "Aquarius",
   },
   "2022-08-15": {
@@ -3209,6 +3404,7 @@ const dateIndexedEphemeris = {
     declMin: "39",
     declSec: "15",
     mag: "-12.5",
+    distanceInAu: "0.0025",
     constellation: "Pisces",
   },
   "2022-08-16": {
@@ -3222,6 +3418,7 @@ const dateIndexedEphemeris = {
     declMin: "33",
     declSec: "14",
     mag: "-12.4",
+    distanceInAu: "0.0025",
     constellation: "Pisces",
   },
   "2022-08-17": {
@@ -3235,6 +3432,7 @@ const dateIndexedEphemeris = {
     declMin: "24",
     declSec: "33",
     mag: "-12.2",
+    distanceInAu: "0.0026",
     constellation: "Pisces",
   },
   "2022-08-18": {
@@ -3248,6 +3446,7 @@ const dateIndexedEphemeris = {
     declMin: "41",
     declSec: "33",
     mag: "-12.1",
+    distanceInAu: "0.0026",
     constellation: "Aries",
   },
   "2022-08-19": {
@@ -3261,6 +3460,7 @@ const dateIndexedEphemeris = {
     declMin: "13",
     declSec: "30",
     mag: "-11.8",
+    distanceInAu: "0.0027",
     constellation: "Aries",
   },
   "2022-08-20": {
@@ -3274,6 +3474,7 @@ const dateIndexedEphemeris = {
     declMin: "51",
     declSec: "00",
     mag: "-11.6",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-08-21": {
@@ -3287,6 +3488,7 @@ const dateIndexedEphemeris = {
     declMin: "25",
     declSec: "48",
     mag: "-11.3",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-08-22": {
@@ -3300,6 +3502,7 @@ const dateIndexedEphemeris = {
     declMin: "51",
     declSec: "08",
     mag: "-11.0",
+    distanceInAu: "0.0027",
     constellation: "Taurus",
   },
   "2022-08-23": {
@@ -3313,6 +3516,7 @@ const dateIndexedEphemeris = {
     declMin: "02",
     declSec: "42",
     mag: "-10.6",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-08-24": {
@@ -3326,6 +3530,7 @@ const dateIndexedEphemeris = {
     declMin: "59",
     declSec: "46",
     mag: "-10.1",
+    distanceInAu: "0.0027",
     constellation: "Gemini",
   },
   "2022-08-25": {
@@ -3339,6 +3544,7 @@ const dateIndexedEphemeris = {
     declMin: "45",
     declSec: "33",
     mag: "-9.4",
+    distanceInAu: "0.0027",
     constellation: "Cancer",
   },
   "2022-08-26": {
@@ -3352,6 +3558,7 @@ const dateIndexedEphemeris = {
     declMin: "26",
     declSec: "55",
     mag: "-8.3",
+    distanceInAu: "0.0027",
     constellation: "Leo",
   },
   "2022-08-27": {
@@ -3365,6 +3572,7 @@ const dateIndexedEphemeris = {
     declMin: "13",
     declSec: "21",
     mag: "-6.3",
+    distanceInAu: "0.0027",
     constellation: "Leo",
   },
   "2022-08-28": {
@@ -3375,10 +3583,52 @@ const dateIndexedEphemeris = {
     raMin: "00",
     raSec: "11",
     declDeg: "+11",
-
     declMin: "15",
     declSec: "58",
     mag: "-7.0",
+    distanceInAu: "0.0026",
     constellation: "Leo",
+  },
+  "2022-08-29": {
+    year: "2022",
+    month: "08",
+    day: "29",
+    raHour: "11",
+    raMin: "46",
+    raSec: "02",
+    declDeg: "+05",
+    declMin: "46",
+    declSec: "44",
+    mag: "-8.7",
+    distanceInAu: "0.0026",
+    constellation: "Virgo",
+  },
+  "2022-08-30": {
+    year: "2022",
+    month: "08",
+    day: "30",
+    raHour: "12",
+    raMin: "31",
+    raSec: "41",
+    declDeg: "-00",
+    declMin: "01",
+    declSec: "39",
+    mag: "-9.8",
+    distanceInAu: "0.0026",
+    constellation: "Virgo",
+  },
+  "2022-08-31": {
+    year: "2022",
+    month: "08",
+    day: "31",
+    raHour: "13",
+    raMin: "18",
+    raSec: "05",
+    declDeg: "-05",
+    declMin: "55",
+    declSec: "45",
+    mag: "-10.5",
+    distanceInAu: "0.0026",
+    constellation: "Virgo",
   },
 };
