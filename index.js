@@ -27,6 +27,9 @@ async function handleRequest({ cf }) {
   const distance = main({
     lat: parseFloat(cf.latitude),
     long: parseFloat(cf.longitude),
+    // Sydney Opera House
+    // lat: -33.8568,
+    // long: 151.215256,
   });
 
   if (distance === -1)
@@ -98,15 +101,13 @@ function distanceFromVisitorToObserverZenith(obsZenithPos, visitorPos) {
   const lat2Rad = (visitorPos.lat * Math.PI) / 180;
   const latDelta = ((lat2Rad - lat1Rad) * Math.PI) / 180;
   const longDelta = ((visitorPos.long - obsZenithPos.long) * Math.PI) / 180;
-  const a = Math.abs(
-    Math.sin(latDelta / 2) * Math.sin(latDelta / 2) +
-      Math.cos(lat1Rad) *
-        Math.cos(lat2Rad) *
-        Math.sin(longDelta / 2) *
-        Math.sin(longDelta / 2),
-  );
-  const c = 2 * Math.atan(Math.sqrt(a) / Math.sqrt(1 - a));
-  return earthRadius * c;
+  // This formula from https://www.movable-type.co.uk/scripts/latlong.html
+  const d =
+    Math.acos(
+      Math.sin(lat1Rad) * Math.sin(lat2Rad) +
+        Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.cos(longDelta),
+    ) * earthRadius;
+  return d;
 }
 
 function dmsToDecimal(pos) {
