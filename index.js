@@ -49,7 +49,7 @@ async function handleRequest({ cf }) {
         Using <a href="https://in-the-sky.org/ephemeris.php?ird=1&irs=1&ima=1&iob=1&objtype=1&objpl=Moon&objtxt=Mars&tz=0&startday=24&startmonth=12&startyear=2021&interval=1&rows=25" _target="blank">static ephemeris</a> for lunar coordinates, so it will be off by some degrees. How many degrees depends on time of day, as the ephemeris gives RAsc and Decl per day.
       </li>
       <li>
-        "kilometers of travel" is a measurement of how far it would take to travel from your current location to the spot on earth closest to the moon (disregarding altitude), then adding the current distance from the earth to the moon.
+        "kilometers of travel" is a <a href="https://www.movable-type.co.uk/scripts/latlong.html" target="_blank">measurement</a> of shortest travel distance between your current location and the spot on earth closest to the moon (disregarding altitude), then adding the current distance from the earth to the moon.
       </li>
     </ol>
   </div>
@@ -61,8 +61,6 @@ async function handleRequest({ cf }) {
   });
 }
 
-const AVG_LUNAR_ALTITUDE_FROM_EARTH = 384472282; // meters;
-
 function main(visitorPos) {
   const date = new Date();
   const dateKey = `${date.getFullYear()}-${date.getMonth() +
@@ -73,6 +71,7 @@ function main(visitorPos) {
   }
 
   console.log("Ephemera:", ephemera);
+
   const declDeg = ephemera.declDeg.startsWith("+")
     ? parseInt(ephemera.declDeg.slice(1))
     : parseInt(ephemera.declDeg);
