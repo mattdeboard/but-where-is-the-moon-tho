@@ -63,8 +63,11 @@ async function handleRequest({ cf }) {
 
 function main(visitorPos) {
   const date = new Date();
-  const dateKey = `${date.getFullYear()}-${date.getMonth() +
-    1}-${date.getDate()}`;
+  let monthString = date.getMonth() + 1;
+  monthString = monthString < 10 ? `0${monthString}` : `${monthString}`;
+  let dayString = date.getDate();
+  dayString = dayString < 10 ? `0${dayString}` : `${dayString}`;
+  const dateKey = `${date.getFullYear()}-${monthString}-${dayString}`;
   const ephemera = dateIndexedEphemeris[dateKey];
   if (!ephemera) {
     return -1;
